@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Call of Duty Hub</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Basic styling for the contact form */
+    .contact-container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+
+    .contact-container h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .contact-container label {
+      display: block;
+      margin: 10px 0 5px;
+      color: #555;
+    }
+
+    .contact-container input,
+    .contact-container textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .contact-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .contact-container button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Contact Us</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Me</a></li>
+        <li><a href="loadouts.html">Loadouts</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="contact-container">
+    <h2>Get in Touch</h2>
+    <form action="/send-email" method="POST">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="question">Your Question:</label>
+      <textarea id="question" name="question" rows="5" required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
+  <footer>
+    <p>© 2024 Call of Duty Hub</p>
+  </footer>
+</body>
+
+</html>
+
+<script>
+  // Wait for the DOM to fully load
+  document.addEventListener("DOMContentLoaded", function() {
+      // Add 'loaded' class to body
+      document.body.classList.add('loaded');
+
+      // Add 'loaded' class to each section after a delay
+      const sections = document.querySelectorAll('section');
+      sections.forEach((section, index) => {
+          setTimeout(() => {
+              section.classList.add('loaded');
+          }, index * 300); // Stagger the animation for each section
+      });
+
+      // Add 'loaded' class to each card after a delay
+      const cards = document.querySelectorAll('.card');
+      cards.forEach((card, index) => {
+          setTimeout(() => {
+              card.classList.add('loaded');
+          }, index * 200); // Stagger the animation for each card
+      });
+  });
+</script>

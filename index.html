@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Call of Duty Hub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header>
+    <h1>Welcome to Call of Duty Hub</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Me</a></li>
+        <li><a href="loadouts.html">Loadouts</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <input type="text" id="searchInput" placeholder="Search The Hub...">
+  </header>
+
+  <section>
+    <h2>Introduction</h2>
+    <p>Welcome to Call of Duty Hub, here you can find many popular loadouts for many different weapons and attachments.</p>
+  </section>
+
+  <footer>
+    <p>© 2024 Call of Duty Hub</p>
+  </footer>
+
+  <script src="search.js"></script>
+</body>
+
+</html>
+
+<script>
+  // Wait for the DOM to fully load
+  document.addEventListener("DOMContentLoaded", function() {
+      // Add 'loaded' class to body
+      document.body.classList.add('loaded');
+
+      // Add 'loaded' class to each section after a delay
+      const sections = document.querySelectorAll('section');
+      sections.forEach((section, index) => {
+          setTimeout(() => {
+              section.classList.add('loaded');
+          }, index * 300); // Stagger the animation for each section
+      });
+
+      // Add 'loaded' class to each card after a delay
+      const cards = document.querySelectorAll('.card');
+      cards.forEach((card, index) => {
+          setTimeout(() => {
+              card.classList.add('loaded');
+          }, index * 200); // Stagger the animation for each card
+      });
+  });
+</script>
