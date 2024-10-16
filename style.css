@@ -187,7 +187,6 @@ footer {
     position: fixed;
     width: 100%;
     bottom: 0;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
 }
 
 /* Media Query for Mobile Devices */
