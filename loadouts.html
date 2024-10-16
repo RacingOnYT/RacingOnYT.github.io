@@ -8,6 +8,21 @@
   <link rel="stylesheet" href="style.css">
   <style>
     /* Modern card styles */
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #1a1a1a;
+      color: #f0f0f0;
+      text-align: center;
+      opacity: 0; /* Start hidden */
+      transition: opacity 0.5s ease-in; /* Smooth transition for opacity */
+    }
+
+    body.loaded {
+      opacity: 1; /* Fade in */
+    }
+
     .card-container {
       display: flex;
       flex-wrap: wrap;
@@ -23,11 +38,25 @@
       width: 300px;
       text-align: left;
       overflow: hidden;
-      transition: transform 0.3s, box-shadow 0.3s; /* Added box-shadow transition */
+      opacity: 0; /* Start hidden */
+      transform: translateY(20px); /* Start slightly below */
+      transition: box-shadow 0.3s ease; /* Smooth transition */
+      position: relative; /* Prevents layout shift */
+      animation: fadeInUp 0.5s forwards; /* Animation for card */
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .card:hover {
-      transform: translateY(-5px); /* Lift effect on hover */
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
     }
 
@@ -68,6 +97,7 @@
     .card:hover .attachments {
       max-height: 200px; /* Expand on hover */
       opacity: 1; /* Fade in */
+      transition: max-height 0.5s ease, opacity 0.5s ease; /* Smooth transition */
     }
 
     .attachments h4 {
@@ -90,95 +120,171 @@
     .attachments li:hover {
       color: #007bff; /* Change color on hover */
     }
+
+    footer {
+      color: white;
+      text-align: center;
+      padding: 15px;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+    }
+
+    /* Sidebar styles */
+    .sidebar {
+      height: 100%;
+      width: 250px; /* Width of the sidebar */
+      position: fixed;
+      top: 0;
+      left: -250px; /* Start hidden off-screen */
+      background-color: #333;
+      overflow-x: hidden;
+      transition: 0.3s; /* Smooth transition for sidebar */
+      padding-top: 60px; /* Space for the top */
+      z-index: 1000; /* Ensure it is above other content */
+    }
+
+    .sidebar a {
+      padding: 10px 15px;
+      text-decoration: none;
+      font-size: 1.2em;
+      color: #f0f0f0;
+      display: block;
+      transition: 0.3s; /* Smooth transition for links */
+    }
+
+    .sidebar a:hover {
+      background-color: rgba(255, 255, 255, 0.2); /* Light hover effect */
+    }
+
+    .sidebar .closebtn {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+      cursor: pointer;
+    }
+
+    /* Button to open the sidebar */
+    .openbtn {
+      font-size: 20px;
+      cursor: pointer;
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 1001; /* Ensure it is above the sidebar */
+    }
   </style>
 </head>
 
 <body>
-  <header>
-    <h1>Welcome to Call of Duty Hub Loadouts</h1>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About Me</a></li>
-        <li><a href="loadouts.html">Loadouts</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-    <input type="text" id="searchInput" placeholder="Search The Hub...">
-  </header>
-
-  <section>
-    <h2>Information</h2>
-    <p>Welcome to Call of Duty Hub Loadouts, here you can find many popular loadouts for Call Of Duty Warzone 2.</p>
-  </section>
-
-  <div class="card-container">
-    <!-- Example of a modern game card -->
-    <div class="card">
-      <img src="https://staticg.sportskeeda.com/editor/2023/11/cf8f3-17007970079966-1920.jpg" alt="MCW Gun from Warzone 2">
-      <h3>MCW</h3>
-      <p>Type: Assault Rifle</p>
-      <p>Damage: 24</p>
-      <p>Long Range</p>
-      <div class="attachments">
-        <h4>Attachments:</h4>
-        <ul>
-          <li>KIMURA BLACKIRON HEAVY SHORT BARREL (Barrel)</li>
-          <li>SL RAZORHAWK LASER LIGHT (Laser)</li>
-          <li>DR-6 HANDSTOP (Underbarrel)</li>
-          <li>40 ROUND MAG (Magazine)</li>
-        </ul>
-      </div>
-    </div>
-    <div class="card">
-      <img src="https://staticg.sportskeeda.com/editor/2023/11/0b559-16998509496617-1920.jpg" alt="Rival 9 from Warzone 2">
-      <h3>Rival 9 Bold</h3>
-      <p>Type: Sub Machine Gun</p>
-      <p>Damage: 32</p>
-      <p>Close Range</p>
-      <div class="attachments">
-        <h4>Attachments:</h4>
-        <ul>
-          <li>QUARTERMASTER SUPPRESSOR (Muzzle)</li>
-          <li>RIVAL-38E FIRE STARTER BARREL (Barrel)</li>
-          <li>RIVAL-FA TACTICAL STOCK (Stock)</li>
-          <li>PARACORD GRIP (Grip)</li>
-          <li>50 ROUND DRUM (Magazine)</li>
-        </ul>
-      </div>
-    </div>
-    <!-- Add more cards as needed -->
+  <div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="index.html">Home</a>
+    <a href="about.html">About Me</a>
+    <a href="loadouts.html">Loadouts</a>
+    <a href="contact.html">Contact</a>
   </div>
 
-  <footer>
-    <p>© 2024 Call of Duty Hub</p>
-  </footer>
+  <div id="main">
+    <button class="openbtn" id="openSidebarBtn" onclick="openNav()">☰ Open Sidebar</button>
+    <header>
+      <h1>Welcome to Call of Duty Hub Loadouts</h1>
+      <input type="text" id="searchInput" placeholder="Search The Hub...">
+    </header>
+
+    <section>
+      <h2>Information</h2>
+      <p>Welcome to Call of Duty Hub Loadouts, here you can find many popular loadouts for Call Of Duty Warzone 2.</p>
+    </section>
+
+    <div class="card-container">
+      <!-- Example of a modern game card -->
+      <div class="card">
+        <img src="https://staticg.sportskeeda.com/editor/2023/11/cf8f3-17007970079966-1920.jpg" alt="MCW Gun from Warzone 2">
+        <h3>MCW</h3>
+        <p>Type: Assault Rifle</p>
+        <p>Damage: 24</p>
+        <p>Long Range</p>
+        <div class="attachments">
+          <h4>Attachments:</h4>
+          <ul>
+            <li>KIMURA BLACKIRON HEAVY SHORT BARREL (Barrel)</li>
+            <li>SL RAZORHAWK LASER LIGHT (Laser)</li>
+            <li>DR-6 HANDSTOP (Underbarrel)</li>
+            <li>40 ROUND MAG (Magazine)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://staticg.sportskeeda.com/editor/2023/11/0b559-16998509496617-1920.jpg" alt="Rival 9 from Warzone 2">
+        <h3>Rival 9 Bold</h3>
+        <p>Type: Sub Machine Gun</p>
+        <p>Damage: 32</p>
+        <p>Close Range</p>
+        <div class="attachments">
+          <h4>Attachments:</h4>
+          <ul>
+            <li>QUARTERMASTER SUPPRESSOR (Muzzle)</li>
+            <li>RIVAL-38E FIRE STARTER BARREL (Barrel)</li>
+            <li>RIVAL-FA TACTICAL STOCK (Stock)</li>
+            <li>PARACORD GRIP (Grip)</li>
+            <li>50 ROUND DRUM (Magazine)</li>
+          </ul>
+        </div>
+      </div>
+      <!-- Add more cards as needed -->
+    </div>
+
+    <footer>
+      <p>© 2024 Call of Duty Hub</p>
+    </footer>
+  </div>
 
   <script src="search.js"></script>
-</body>
+  <script>
+    // Function to open the sidebar
+    function openNav() {
+      document.getElementById("mySidebar").style.left = "0"; // Show sidebar
+      document.body.style.marginLeft = "250px"; // Shift body content
+      document.getElementById("openSidebarBtn").style.display = "none"; // Hide the open button
+    }
 
-</html>
+    // Function to close the sidebar
+    function closeNav() {
+      document.getElementById("mySidebar").style.left = "-250px"; // Hide sidebar
+      document.body.style.marginLeft = "0"; // Reset body content
+      document.getElementById("openSidebarBtn").style.display = "block"; // Show the open button
+    }
 
-<script>
-  // Wait for the DOM to fully load
-  document.addEventListener("DOMContentLoaded", function() {
+    // Wait for the DOM to fully load
+    document.addEventListener("DOMContentLoaded", function() {
       // Add 'loaded' class to body
       document.body.classList.add('loaded');
 
       // Add 'loaded' class to each section after a delay
       const sections = document.querySelectorAll('section');
       sections.forEach((section, index) => {
-          setTimeout(() => {
-              section.classList.add('loaded');
-          }, index * 300); // Stagger the animation for each section
+        setTimeout(() => {
+          section.classList.add('loaded');
+        }, index * 300); // Stagger the animation for each section
       });
 
       // Add 'loaded' class to each card after a delay
       const cards = document.querySelectorAll('.card');
       cards.forEach((card, index) => {
-          setTimeout(() => {
-              card.classList.add('loaded');
-          }, index * 200); // Stagger the animation for each card
+        setTimeout(() => {
+          card.classList.add('loaded');
+        }, index * 200); // Stagger the animation for each card
       });
-  });
-</script>
+    });
+  </script>
+</body>
+
+</html>
