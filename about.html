@@ -6,56 +6,132 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Call of Duty Hub About</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* General styles */
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #1a1a1a;
+      color: #f0f0f0;
+      transition: margin-left 0.3s; /* Smooth transition for body margin */
+    }
+
+    /* Sidebar styles */
+    .sidebar {
+      height: 100%;
+      width: 250px; /* Width of the sidebar */
+      position: fixed;
+      top: 0;
+      left: -250px; /* Start hidden off-screen */
+      background-color: #333;
+      overflow-x: hidden;
+      transition: 0.3s; /* Smooth transition for sidebar */
+      padding-top: 60px; /* Space for the top */
+      z-index: 1000; /* Ensure it is above other content */
+    }
+
+    .sidebar a {
+      padding: 10px 15px;
+      text-decoration: none;
+      font-size: 1.2em;
+      color: #f0f0f0;
+      display: block;
+      transition: 0.3s; /* Smooth transition for links */
+    }
+
+    .sidebar a:hover {
+      background-color: rgba(255, 255, 255, 0.2); /* Light hover effect */
+    }
+
+    .sidebar .closebtn {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+      cursor: pointer;
+    }
+
+    /* Main content styles */
+    .main {
+      transition: margin-left 0.3s; /* Smooth transition for main content */
+      padding: 20px;
+    }
+
+    /* Button to open the sidebar */
+    .openbtn {
+      font-size: 20px;
+      cursor: pointer;
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 1001; /* Ensure it is above the sidebar */
+    }
+  </style>
 </head>
 
 <body>
-  <header>
-    <h1>Welcome to Call of Duty Hub About</h1>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About Me</a></li>
-        <li><a href="loadouts.html">Loadouts</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-    <input type="text" id="searchInput" placeholder="Search The Hub...">
-  </header>
+  <div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="index.html">Home</a>
+    <a href="about.html">About Me</a>
+    <a href="loadouts.html">Loadouts</a>
+    <a href="contact.html">Contact</a>
+  </div>
 
-  <section>
-    <h2>About</h2>
-    <p>In the Call of Duty franchise, loadouts are essential for customizing a player's gameplay experience. A loadout typically consists of a primary weapon, secondary weapon, perks, and equipment that suit a player's preferred playstyle. Players can mix and match various weapons, attachments, and perks to enhance their combat effectiveness on the battlefield.</p>
-  </section>
+  <div id="main">
+    <button class="openbtn" id="openSidebarBtn" onclick="openNav()">☰ Open Sidebar</button>
+    <header>
+      <h1>Welcome to Call of Duty Hub About</h1>
+      <input type="text" id="searchInput" placeholder="Search The Hub...">
+    </header>
 
-  <footer>
-    <p>© 2024 Call of Duty Hub</p>
-  </footer>
+    <section>
+      <h2>Introduction</h2>
+      <p>Welcome to Call of Duty Hub About, here you can find out more about Call of Duty Hub.</p>
+    </section>
+
+    <footer>
+      <p>© 2024 Call of Duty Hub</p>
+    </footer>
+  </div>
 
   <script src="search.js"></script>
-</body>
+  <script>
+    // Function to open the sidebar
+    function openNav() {
+      document.getElementById("mySidebar").style.left = "0"; // Show sidebar
+      document.body.style.marginLeft = "250px"; // Shift body content
+      document.getElementById("openSidebarBtn").style.display = "none"; // Hide the open button
+    }
 
-</html>
+    // Function to close the sidebar
+    function closeNav() {
+      document.getElementById("mySidebar").style.left = "-250px"; // Hide sidebar
+      document.body.style.marginLeft = "0"; // Reset body content
+      document.getElementById("openSidebarBtn").style.display = "block"; // Show the open button
+    }
 
-<script>
-  // Wait for the DOM to fully load
-  document.addEventListener("DOMContentLoaded", function() {
+    // Wait for the DOM to fully load
+    document.addEventListener("DOMContentLoaded", function() {
       // Add 'loaded' class to body
       document.body.classList.add('loaded');
 
       // Add 'loaded' class to each section after a delay
       const sections = document.querySelectorAll('section');
       sections.forEach((section, index) => {
-          setTimeout(() => {
-              section.classList.add('loaded');
-          }, index * 300); // Stagger the animation for each section
+        setTimeout(() => {
+          section.classList.add('loaded');
+        }, index * 300); // Stagger the animation for each section
       });
+    });
+  </script>
+</body>
 
-      // Add 'loaded' class to each card after a delay
-      const cards = document.querySelectorAll('.card');
-      cards.forEach((card, index) => {
-          setTimeout(() => {
-              card.classList.add('loaded');
-          }, index * 200); // Stagger the animation for each card
-      });
-  });
-</script>
+</html>
