@@ -21,7 +21,6 @@ import io
 from collections import defaultdict
 
 
-
 intents = discord.Intents.default()
 intents.message_content = True
 intents.guilds = True
