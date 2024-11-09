@@ -10,6 +10,10 @@ COPY . /app
 # Install any needed packages specified in requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
+RUN pip install discord.py
+RUN pip install ro-py
+RUN pip install aiohttp
+
 
 # Make port 80 available to the world outside this container
 EXPOSE 80
