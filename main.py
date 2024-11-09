@@ -448,12 +448,14 @@ async def ticket_setup(interaction: discord.Interaction):
 
 verification_codes = {}
 
-# Define the blacklist of group IDs
+# Define the blacklist of group IDs and the required group ID
 BLACKLISTED_GROUPS = {
     32490961: "Group Name 1",
     32006412: "Group Name 2",
     # Add more group IDs and names as needed
 }
+
+REQUIRED_GROUP_ID = 32515029  # Replace with the actual ID of the required group
 
 class GroupInfo:
     def __init__(self, name: str, id: int, role: str):
@@ -534,6 +536,9 @@ async def background(interaction: discord.Interaction, username: str):
     blacklisted_groups = [group for group in groups if group.id in BLACKLISTED_GROUPS]
     other_groups = [group for group in groups if group.id not in BLACKLISTED_GROUPS]
 
+    # Check if the user who ran the command is in the required group
+    user_in_required_group = any(group.id == REQUIRED_GROUP_ID for group in groups)
+
     embed = discord.Embed(title=f"Background Check for {username}", color=discord.Color.blue())
     embed.set_thumbnail(url=f"https://www.roblox.com/headshot-thumbnail/image?userId={user_id}&width=420&height=420&format=png")
     embed.add_field(name="Display Name", value=display_name, inline=False)
@@ -543,16 +548,24 @@ async def background(interaction: discord.Interaction, username: str):
         description = profile['description'].strip()
         embed.add_field(name="Profile Description", value=description if description else "No description", inline=False)
 
+    # Add the category for blacklisted groups
     if blacklisted_groups:
         embed.add_field(name="⚠️ Blacklisted Groups", value="\n".join([f"**{group.name}** - {group.role}" for group in blacklisted_groups]), inline=False)
         embed.color = discord.Color.red()
     else:
         embed.add_field(name="Blacklisted Groups", value="None", inline=False)
 
+    # Add the category for other groups
     if other_groups:
         embed.add_field(name="Other Groups", value="\n".join([f"**{group.name}** - {group.role}" for group in other_groups[:5]]), inline=False)
         if len(other_groups) > 5:
             embed.add_field(name="", value=f"*and {len(other_groups) - 5} more...*", inline=False)
+
+    # Check if the user is cleared
+    if not blacklisted_groups and user_in_required_group:
+        embed.add_field(name="Status", value="✅ Cleared", inline=False)
+    else:
+        embed.add_field(name="Status", value="❌ Not Cleared", inline=False)
 
     if badges:
         recent_badges = sorted(badges, key=lambda x: x.get('awardedDate', ''), reverse=True)[:5]
@@ -579,6 +592,8 @@ async def background_error(interaction: discord.Interaction, error: app_commands
             await interaction.response.send_message(f"An error occurred: {error}", ephemeral=True)
         else:
             await interaction.followup.send(f"An error occurred: {error}", ephemeral=True)
+
+#END OF BACKGROUND CHECK
 
 async def verify_profile(interaction: discord.Interaction, roblox_username: str):
     # Step 1: Get the user's generated verification code
