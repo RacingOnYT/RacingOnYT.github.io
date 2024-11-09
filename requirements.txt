@@ -1,14 +1,3 @@
-discord.py
-ro_py
-asyncio
-random
-string
-aiohttp
-datetime
-time
-os
-typing
-re
-collections
-io
-roblox
+discord.py>=2.0.0
+ro-py>=1.0.0
+aiohttp>=3.8.0
