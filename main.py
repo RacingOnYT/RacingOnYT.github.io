@@ -21,6 +21,7 @@ import io
 from collections import defaultdict
 
 
+
 intents = discord.Intents.default()
 intents.message_content = True
 intents.guilds = True
@@ -559,6 +560,12 @@ async def background(interaction: discord.Interaction, username: str):
         embed.add_field(name="Other Groups", value="\n".join([f"**{group.name}** - {group.role}" for group in other_groups[:5]]), inline=False)
         if len(other_groups) > 5:
             embed.add_field(name="", value=f"*and {len(other_groups) - 5} more...*", inline=False)
+
+    # Add the category for the required group
+    if user_in_required_group:
+        embed.add_field(name="✅ Required Group Status", value="You are in the required group.", inline=False)
+    else:
+        embed.add_field(name="❌ Required Group Status", value="You are NOT in the required group.", inline=False)
 
     # Check if the user is cleared
     if not blacklisted_groups and user_in_required_group:
