@@ -892,6 +892,8 @@ async def remove_banned_word(interaction: discord.Interaction, word: str):
 
 @bot.event
 async def on_ready():
+    activity = discord.Game(name="Playing a game!")  # Change the name to whatever you want
+    await bot.change_presence(activity=activity)
     print(f'{bot.user} has connected to Discord!')
     try:
         synced_commands = await bot.tree.sync()
@@ -911,12 +913,6 @@ async def shutdown(interaction: discord.Interaction):
 
     await interaction.followup.send("The bot is shut down.", ephemeral=True)
     await bot.close()
-
-
-
-
-
-
 
 
 
