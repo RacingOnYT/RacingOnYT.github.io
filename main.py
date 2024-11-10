@@ -563,9 +563,9 @@ async def background(interaction: discord.Interaction, username: str):
 
     # Add the category for the required group
     if user_in_required_group:
-        embed.add_field(name="✅ Required Group Status", value="You are in the required group.", inline=False)
+        embed.add_field(name="✅ Required Group Status", value="User is in the required group.", inline=False)
     else:
-        embed.add_field(name="❌ Required Group Status", value="You are NOT in the required group.", inline=False)
+        embed.add_field(name="❌ Required Group Status", value="User is NOT in the required group.", inline=False)
 
     # Check if the user is cleared
     if not blacklisted_groups and user_in_required_group:
