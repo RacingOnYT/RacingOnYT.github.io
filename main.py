@@ -47,7 +47,7 @@ async def on_ready():
 
 @bot.tree.command(name="event", description="Announce a server start up event")
 async def event(interaction: discord.Interaction):
-    if "Defence Staff" not in [role.name for role in interaction.user.roles]:
+    if "Admin" not in [role.name for role in interaction.user.roles]:
         await interaction.response.send_message("You don't have the required role to use this command!", ephemeral=True)
         return
 
