@@ -924,7 +924,14 @@ async def on_reaction_add(reaction, user):
                 if role:
                     member = reaction.message.guild.get_member(user.id)
                     await member.add_roles(role)
-                    await reaction.message.channel.send(f"{user.mention} has been given the role {role.name}!")
+
+                    # Create an embed response
+                    response_embed = discord.Embed(
+                        title="Role Assigned",
+                        description=f"You have been given the role **{role.name}**!",
+                        color=discord.Color.green()
+                    )
+                    await user.send(embed=response_embed)  # Send the embed to the user
 
 @bot.event
 async def on_reaction_remove(reaction, user):
@@ -942,7 +949,14 @@ async def on_reaction_remove(reaction, user):
                 if role:
                     member = reaction.message.guild.get_member(user.id)
                     await member.remove_roles(role)
-                    await reaction.message.channel.send(f"{user.mention} has had the role {role.name} removed!")
+
+                    # Create an embed response
+                    response_embed = discord.Embed(
+                        title="Role Removed",
+                        description=f"You have had the role **{role.name}** removed!",
+                        color=discord.Color.red()
+                    )
+                    await user.send(embed=response_embed)  # Send the embed to the user
 
 #END OF REACTION ROLES
 
