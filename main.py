@@ -46,9 +46,12 @@ async def on_ready():
 
 
 @bot.tree.command(name="event", description="Announce a server start up event")
+@commands.has_role("Admin")  # Ensure only users with the "Admin" role can use this command
 async def event(interaction: discord.Interaction):
-    if "Admin" not in [role.name for role in interaction.user.roles]:
-        await interaction.response.send_message("You don't have the required role to use this command!", ephemeral=True)
+    # Check if the role exists
+    role = discord.utils.get(interaction.guild.roles, name="SSU Ping")
+    if not role:
+        await interaction.response.send_message("The role 'SSU Ping' does not exist.", ephemeral=True)
         return
 
     embed = discord.Embed(title='Server Start Up', description='''
@@ -59,9 +62,18 @@ Link: https://www.roblox.com/games/86482064502096/BETA-Fort-Lackland-AFB
 React with the checkmark if you are able to attend the server start up.
 ''', color=discord.Color.yellow())
     embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/1095878769480323152/1305407272138178581/noFilter.png?ex=6732eac2&is=67319942&hm=eec328799e56421589fad758cb9c9cba8a43b7a19a9fb26474991ad6d04ac008&')  # Replace with the URL of the thumbnail image
-    message = await interaction.channel.send('@SSU Ping', embed=embed)
+
+    # Send the message and ping the role
+    message = await interaction.channel.send(f'{role.mention}', embed=embed)
     await message.add_reaction('✔️')
     await interaction.response.send_message("Event announced!", ephemeral=True)
+
+@event.error
+async def event_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
+    if isinstance(error, commands.MissingRole):
+        await interaction.response.send_message("You don't have the required role 'Admin' to use this command.", ephemeral=True)
+    else:
+        await interaction.response.send_message(f"An error occurred: {error}", ephemeral=True)
 
 @bot.tree.command(name="cmds", description="List of available commands")
 async def cmds(interaction: discord.Interaction):
