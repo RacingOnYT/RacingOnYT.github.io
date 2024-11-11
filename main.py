@@ -32,7 +32,7 @@ bot = commands.Bot(command_prefix='/', intents=intents)
 
 roblox_client = Client()
 
-guild_ids = [1255558888884011083]  # Replace with your server ID
+guild_ids = [1182496434923261972]  # Replace with your server ID
 
 
 @bot.event
@@ -52,13 +52,13 @@ async def event(interaction: discord.Interaction):
         return
 
     embed = discord.Embed(title='Server Start Up', description='''
-Someone is hosting a server start up right now, use the link down below to join the Military Base.
+Someone is hosting a server start up right now, use the link down below to join the Air Force Base.
 
-Link: https://www.roblox.com/games/18334104602/NEW-Fort-Killarney#!/about
+Link: https://www.roblox.com/games/86482064502096/BETA-Fort-Lackland-AFB
 
 React with the checkmark if you are able to attend the server start up.
 ''', color=discord.Color.yellow())
-    embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/1153026855247544433/1258215380686602282/GFX_1.png?ex=668a87a3&is=66893623&hm=f8db62f3d96d1a19e484ee9045dd78f55f8604dd78d1869a6068610c74095fb9&')  # Replace with the URL of the thumbnail image
+    embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/1095878769480323152/1305407272138178581/noFilter.png?ex=6732eac2&is=67319942&hm=eec328799e56421589fad758cb9c9cba8a43b7a19a9fb26474991ad6d04ac008&')  # Replace with the URL of the thumbnail image
     message = await interaction.channel.send('@everyone', embed=embed)
     await message.add_reaction('✔️')
     await interaction.response.send_message("Event announced!", ephemeral=True)
@@ -67,7 +67,6 @@ React with the checkmark if you are able to attend the server start up.
 async def cmds(interaction: discord.Interaction):
     embed = discord.Embed(title='Commands', description='List of available commands:', color=discord.Color.blue())
     embed.add_field(name='/event', value='Sends a server start up message', inline=False)
-    embed.add_field(name='/shutdown', value='Shuts down the bot (only available to the bot owner)', inline=False)
     embed.add_field(name='/clear', value='Deletes a specified number of messages', inline=False)
     embed.add_field(name='/kick', value='Kicks a Player', inline=False)
     embed.add_field(name='/ban', value='Bans a Player', inline=False)
@@ -120,43 +119,39 @@ async def ban(interaction: discord.Interaction, user: discord.Member, reason: st
 
 #VERIFY COMMANDS!----------------------------------------------------
 
-@bot.tree.command(name="verify", description="Verify your account")
-async def verify(interaction: discord.Interaction):
-            # Generate a random Captcha code
-            captcha_code = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(6))
-
-            # Send the Captcha code to the user via DM
-            embed = discord.Embed(title='Verification', description=f'Please type the following code to verify: `{captcha_code}`', color=discord.Color.blue())
-            await interaction.user.send(embed=embed)
-
-            # Notify the user in the interaction channel to check their DMs
-            await interaction.response.send_message("Check your DMs for the Verification Code.", ephemeral=True)
-
-            # Wait for the user to respond with the Captcha code
-            def check(message):
-                return message.author == interaction.user and isinstance(message.channel, discord.DMChannel)
-
-            try:
-                response = await bot.wait_for('message', check=check, timeout=60.0)
-            except asyncio.TimeoutError:
-                embed = discord.Embed(title='Verification Timed Out', description='You took too long to respond. Please try again.', color=discord.Color.red())
-                await interaction.user.send(embed=embed)
-                return
-
-            # Check if the user's response matches the Captcha code
-            if response.content == captcha_code:
-                # Verify the user's account and give them a role
-                role = discord.utils.get(interaction.guild.roles, name='Verified')
-                if role is None:
-                    embed = discord.Embed(title='Error', description='Verified role not found.', color=discord.Color.red())
-                    await interaction.user.send(embed=embed)
-                    return
-                await interaction.user.add_roles(role)
-                embed = discord.Embed(title='Verification Successful', description='You have been given the Verified role.', color=discord.Color.green())
-                await interaction.user.send(embed=embed)
-            else:
-                embed = discord.Embed(title='Invalid Captcha Code', description='Please try again.', color=discord.Color.red())
-                await interaction.user.send(embed=embed)
+#@bot.tree.command(name="verify", description="Verify your account")
+#async def verify(interaction: discord.Interaction):
+ #           # Generate a random Captcha code
+  #          captcha_code = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(6))
+#
+ #           # Send the Captcha code to the user via DM
+  #          embed = discord.Embed(title='Verification', description=f'Please type the following code to verify: `{captcha_code}`', color=discord.Color.blue())
+   #         await interaction.user.send(embed=embed)
+#          await interaction.response.send_message("Check your DMs for the Verification Code.", ephemeral=True)
+#
+ #           # Wait for the user to respond with the Captcha code
+  #          def check(message):
+   #             return message.author == interaction.user and isinstance(message.channel, discord.DMChannel)
+#
+ #           try:
+  #              response = await bot.wait_for('message', check=check, timeout=60.0)
+   #         except asyncio.TimeoutError:
+    #            embed = discord.Embed(title='Verification Timed Out', description='You took too long to respond. Please try again.', color=discord.Color.red())
+     #           await interaction.user.send(embed=embed)
+      #          return
+#
+ #           # Check if the user's response matches the Captcha code
+  #          if response.content == captcha_code:
+   #             # Verify the user's account and give them a role
+    #            role = discord.utils.get(interaction.guild.roles, name='Verified')
+     #           if role is None:
+      #              embed = discord.Embed(title='Error', description='Verified role not found.', color=discord.Color.red())
+       #             await interaction.user.send(embed=embed)
+        #            return
+         #       await interaction.user.add_roles(role)
+          #      embed = discord.Embed(title='Verification Successful', description='You have been given the Verified role.', color=discord.Color.green())
+           #     await interaction.user.send(embed=embed)
+            ###  await interaction.user.send(embed=embed)
 
 
 #USERLOOKUP COMMAND---------------------------------------------------
@@ -290,44 +285,44 @@ class AnnouncementView(discord.ui.View):
         embed.set_footer(text=f"Reactions: {len(self.reactions)}")
         await interaction.message.edit(embed=embed)
 
-@bot.tree.command(name="announce", description="Send an announcement to the announcements channel")
-@app_commands.checks.has_permissions(manage_messages=True)
-async def announce(interaction: discord.Interaction, title: str, message: str, channel: Optional[discord.TextChannel] = None, ping_role: Optional[discord.Role] = None, image_url: Optional[str] = None):
+#@bot.tree.command(name="announce", description="Send an announcement to the announcements channel")
+#@app_commands.checks.has_permissions(administator=True)
+#async def announce(interaction: discord.Interaction, title: str, message: str, channel: Optional[discord.TextChannel] = None, ping_role: Optional[discord.Role] = None, image_url: Optional[str] = None):
     # Get the announcement channel
-    if channel is None:
-        channel = discord.utils.get(interaction.guild.channels, name='announcements')
-    if channel is None:
-        await interaction.response.send_message('Announcement channel not found.', ephemeral=True)
-        return
+ #   if channel is None:
+  #      channel = discord.utils.get(interaction.guild.channels, name='announcements')
+   # if channel is None:
+    #    await interaction.response.send_message('Announcement channel not found.', ephemeral=True)
+     #   return
 
     # Create the embed
-    embed = discord.Embed(title=title, description=message, color=discord.Color.blue())
-    embed.set_author(name=interaction.user.display_name, icon_url=interaction.user.avatar.url)
-    embed.timestamp = discord.utils.utcnow()
+    #embed = discord.Embed(title=title, description=message, color=discord.Color.blue())
+    #embed.set_author(name=interaction.user.display_name, icon_url=interaction.user.avatar.url)
+    #embed.timestamp = discord.utils.utcnow()
 
-    if image_url:
-        embed.set_image(url=image_url)
+    #if image_url:
+     #   embed.set_image(url=image_url)
 
     # Create the view with reaction buttons
-    view = AnnouncementView(interaction.user)
+    #view = AnnouncementView(interaction.user)
 
     # Send the announcement
-    content = ping_role.mention if ping_role else None
-    announcement_message = await channel.send(content=content, embed=embed, view=view)
+    #content = ping_role.mention if ping_role else None
+    #announcement_message = await channel.send(content=content, embed=embed, view=view)
 
     # Add default reactions
-    await announcement_message.add_reaction("👍")
-    await announcement_message.add_reaction("👎")
-    await announcement_message.add_reaction("❓")
+    #await announcement_message.add_reaction("👍")
+    #await announcement_message.add_reaction("👎")
+    #await announcement_message.add_reaction("❓")
 
-    await interaction.response.send_message(f'Announcement sent to {channel.mention}.', ephemeral=True)
+    #await interaction.response.send_message(f'Announcement sent to {channel.mention}.', ephemeral=True)
 
-@announce.error
-async def announce_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
-    if isinstance(error, app_commands.errors.MissingPermissions):
-        await interaction.response.send_message("You don't have permission to use this command.", ephemeral=True)
-    else:
-        await interaction.response.send_message(f"An error occurred: {error}", ephemeral=True)
+#@announce.error
+#async def announce_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
+ #   if isinstance(error, app_commands.errors.MissingPermissions):
+  #      await interaction.response.send_message("You don't have permission to use this command.", ephemeral=True)
+   # else:
+    #    await interaction.response.send_message(f"An error occurred: {error}", ephemeral=True)
 
 #TICKET SYSTEM---------------------------------------------------------
 
@@ -436,7 +431,7 @@ class AddUserModal(discord.ui.Modal, title='Add User to Ticket'):
 @commands.has_permissions(administrator=True)
 async def ticket_setup(interaction: discord.Interaction):
     embed = discord.Embed(
-        title="British Army Support",
+        title="United States Air Force Support",
         description="Click on the button below if you wish to talk to the support team. They will respond to your request.",
         color=discord.Color.blue()
     )
@@ -450,8 +445,8 @@ verification_codes = {}
 
 # Define the blacklist of group IDs and the required group ID
 BLACKLISTED_GROUPS = {
-    32490961: "Group Name 1",
-    32006412: "Group Name 2",
+    1: "Group Name 1",
+    1: "Group Name 2",
     # Add more group IDs and names as needed
 }
 
@@ -601,68 +596,67 @@ async def background_error(interaction: discord.Interaction, error: app_commands
 
 #END OF BACKGROUND CHECK
 
-async def verify_profile(interaction: discord.Interaction, roblox_username: str):
+#async def verify_profile(interaction: discord.Interaction, roblox_username: str):
     # Step 1: Get the user's generated verification code
-    verification_code = verification_codes.get(interaction.user.id)
+ #   verification_code = verification_codes.get(interaction.user.id)
 
-    if not verification_code:
-        await interaction.response.send_message("Verification failed. No verification code found.", ephemeral=True)
-        return
+  #  if not verification_code:
+   #     await interaction.response.send_message("Verification failed. No verification code found.", ephemeral=True)
+    #    return
 
     # Step 2: Use Roblox API to check the user's profile
-    profile_url = f"https://users.roblox.com/v1/users/search?keyword={roblox_username}"
+    #profile_url = f"https://users.roblox.com/v1/users/search?keyword={roblox_username}"
 
-    async with aiohttp.ClientSession() as session:
-        async with session.get(profile_url) as response:
-            if response.status != 200:
-                await interaction.response.send_message(f"Failed to retrieve data for `{roblox_username}`.", ephemeral=True)
-                return
+    #async with aiohttp.ClientSession() as session:
+     #   async with session.get(profile_url) as response:
+      #      if response.status != 200:
+       #         await interaction.response.send_message(f"Failed to retrieve data for `{roblox_username}`.", ephemeral=True)
+        #        return
+#
+ #           data = await response.json()
+#
+ #          if len(data['data']) == 0:
+  #              await interaction.response.send_message(f"No Roblox user found with the username `{roblox_username}`.", ephemeral=True)
+   #             return
 
-            data = await response.json()
-
-            # Check if the Roblox username exists
-            if len(data['data']) == 0:
-                await interaction.response.send_message(f"No Roblox user found with the username `{roblox_username}`.", ephemeral=True)
-                return
-
-            user_id = data['data'][0]['id']  # Get the user's Roblox ID
+    #        user_id = data['data'][0]['id']  # Get the user's Roblox ID
 
         # Step 3: Get the user's Roblox profile to check the description
-        user_profile_url = f"https://users.roblox.com/v1/users/{user_id}"
+     #   user_profile_url = f"https://users.roblox.com/v1/users/{user_id}"
 
-        async with session.get(user_profile_url) as response:
-            if response.status != 200:
-                await interaction.response.send_message(f"Failed to retrieve profile for `{roblox_username}`.", ephemeral=True)
-                return
+      #  async with session.get(user_profile_url) as response:
+       #     if response.status != 200:
+        #        await interaction.response.send_message(f"Failed to retrieve profile for `{roblox_username}`.", ephemeral=True)
+         #       return
 
-            user_data = await response.json()
+          #  user_data = await response.json()
 
             # Step 4: Check if the verification code is in the description
-            if str(verification_code) in user_data.get('description', ''):
+           # if str(verification_code) in user_data.get('description', ''):
                 # Code matches, assign the verified role
-                verified_role = discord.utils.get(interaction.guild.roles, name="Verified")
-                if verified_role:
-                    await interaction.user.add_roles(verified_role)
-                    await interaction.response.send_message(f"✅ {interaction.user.mention}, you have been successfully verified!", ephemeral=True)
-                else:
-                    await interaction.response.send_message("The 'Verified' role does not exist in this server. Please contact an admin.", ephemeral=True)
-            else:
+             #   verified_role = discord.utils.get(interaction.guild.roles, name="Verified")
+              #  if verified_role:
+               #     await interaction.user.add_roles(verified_role)
+                #    await interaction.response.send_message(f"✅ {interaction.user.mention}, you have been successfully verified!", ephemeral=True)
+             #   else:
+              #      await interaction.response.send_message("The 'Verified' role does not exist in this server. Please contact an admin.", ephemeral=True)
+           # else:
                 # Code doesn't match
-                await interaction.response.send_message(f"Verification failed. Could not find the code in `{roblox_username}`'s profile.", ephemeral=True)
+            #    await interaction.response.send_message(f"Verification failed. Could not find the code in `{roblox_username}`'s profile.", ephemeral=True)
 
 # Slash command for Roblox verification
-@bot.tree.command(name="roblox-verify", description="Verify your Roblox account by updating your profile description.")
-async def roblox_verify(interaction: discord.Interaction, roblox_username: str):
+#@bot.tree.command(name="roblox-verify", description="Verify your Roblox account by updating your profile description.")
+#async def roblox_verify(interaction: discord.Interaction, roblox_username: str):
     # Step 1: Generate a random verification code for the user
-    verification_code = random.randint(1000, 9999)
-    verification_codes[interaction.user.id] = verification_code
+#    verification_code = random.randint(1000, 9999)
+ #   verification_codes[interaction.user.id] = verification_code
 
     # Step 2: Ask the user to update their Roblox profile description
-    message = (
-        f"Please add this verification code `{verification_code}` to your Roblox profile description,"
-        " then run the command again."
-    )
-    await interaction.response.send_message(message, ephemeral=True)
+  #  message = (
+   #     f"Please add this verification code `{verification_code}` to your Roblox profile description,"
+    #    " then run the command again."
+    #)
+    #await interaction.response.send_message(message, ephemeral=True)
 
 # END OF ROBLOX VERIFICATION
 
@@ -892,7 +886,7 @@ async def remove_banned_word(interaction: discord.Interaction, word: str):
 
 @bot.event
 async def on_ready():
-    activity = discord.Game(name="Ghostinz USAF!")  # Change the name to whatever you want
+    activity = discord.Game(name="Playing Ghostinz USAF!")  # Change the name to whatever you want
     await bot.change_presence(activity=activity)
     print(f'{bot.user} has connected to Discord!')
     try:
