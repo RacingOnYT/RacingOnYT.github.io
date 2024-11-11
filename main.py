@@ -903,15 +903,14 @@ async def on_ready():
 
 OWNER_ID = 781891266295627786  # Replace with your UserID
 
-@bot.tree.command(name="shutdown", description="Shut down the bot")
-async def shutdown(interaction: discord.Interaction):
-    if interaction.user.id != OWNER_ID:
-        await interaction.response.send_message("You don't have permission to shut down the bot.", ephemeral=True)
+@bot.command(name="shutdown", help="Shut down the bot")
+@commands.has_permissions(administrator=True)  # Ensure only admins can use this command
+async def shutdown(ctx):
+    if ctx.author.id != OWNER_ID:
+        await ctx.send("You don't have permission to shut down the bot.")
         return
 
-    await interaction.response.send_message('Shutting down...',  ephemeral=True)
-
-    await interaction.followup.send("The bot is shut down.", ephemeral=True)
+    await ctx.send('Shutting down...')
     await bot.close()
 
 
