@@ -59,7 +59,7 @@ Link: https://www.roblox.com/games/86482064502096/BETA-Fort-Lackland-AFB
 React with the checkmark if you are able to attend the server start up.
 ''', color=discord.Color.yellow())
     embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/1095878769480323152/1305407272138178581/noFilter.png?ex=6732eac2&is=67319942&hm=eec328799e56421589fad758cb9c9cba8a43b7a19a9fb26474991ad6d04ac008&')  # Replace with the URL of the thumbnail image
-    message = await interaction.channel.send('@everyone', embed=embed)
+    message = await interaction.channel.send('@SSU Ping', embed=embed)
     await message.add_reaction('✔️')
     await interaction.response.send_message("Event announced!", ephemeral=True)
 
