@@ -897,7 +897,11 @@ ROLE_EMOJI_MAP = {
 @commands.has_permissions(manage_roles=True)  # Ensure only users with manage roles can use this command
 async def setup_reaction_roles(interaction: discord.Interaction):
     # Create an embed message
-    embed = discord.Embed(title="Reaction Roles", description="React to this message to get your role!")
+    embed = discord.Embed(title="Reaction Roles", description="""
+                          React to this message to get your role!
+                          ⚒️ = Development Ping
+                          🪖 = SSU Ping
+                          """)
     
     # Send the embed message
     message = await interaction.channel.send(embed=embed)
