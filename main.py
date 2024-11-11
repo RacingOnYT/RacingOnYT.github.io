@@ -886,7 +886,7 @@ async def remove_banned_word(interaction: discord.Interaction, word: str):
 
 @bot.event
 async def on_ready():
-    activity = discord.Game(name="Playing Ghostinz USAF!")  # Change the name to whatever you want
+    activity = discord.Game(name="Ghostinz USAF!")  # Change the name to whatever you want
     await bot.change_presence(activity=activity)
     print(f'{bot.user} has connected to Discord!')
     try:
