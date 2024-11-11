@@ -505,7 +505,7 @@ async def fetch_user_profile(session: aiohttp.ClientSession, user_id: int) -> Op
         return await response.json()
 
 @bot.tree.command(name="background", description="Check a Roblox player's group memberships, badges, friends, and profile description.")
-@app_commands.checks.has_role("Admin")
+@app_commands.checks.has_role("Command Staff")
 async def background(interaction: discord.Interaction, username: str):
     await interaction.response.defer(ephemeral=True)
     print(f"Background check requested for username: {username}")
@@ -883,6 +883,68 @@ async def remove_banned_word(interaction: discord.Interaction, word: str):
 #WIP
 
 # END OF CLOCKING SYSTEM
+
+#START OF REACTION ROLES
+
+# Define your roles and corresponding emojis
+ROLE_EMOJI_MAP = {
+    "⚒️": "Development Ping",  # Replace with your actual role name
+    "🪖": "SSU Ping",  # Replace with your actual role name
+    # Add more roles and emojis as needed
+}
+
+@bot.tree.command(name="setup_reaction_roles", description="Set up reaction roles.")
+@commands.has_permissions(manage_roles=True)  # Ensure only users with manage roles can use this command
+async def setup_reaction_roles(interaction: discord.Interaction):
+    # Create an embed message
+    embed = discord.Embed(title="Reaction Roles", description="React to this message to get your role!")
+    
+    # Send the embed message
+    message = await interaction.channel.send(embed=embed)
+
+    # Add reactions for each role
+    for emoji in ROLE_EMOJI_MAP.keys():
+        await message.add_reaction(emoji)
+
+    await interaction.response.send_message("Reaction roles have been set up!", ephemeral=True)
+
+@bot.event
+async def on_reaction_add(reaction, user):
+    # Ignore if the reaction is from a bot
+    if user.bot:
+        return
+
+    # Check if the reaction is in the message we sent
+    if reaction.message.embeds:
+        embed = reaction.message.embeds[0]
+        if embed.title == "Reaction Roles":
+            role_name = ROLE_EMOJI_MAP.get(str(reaction.emoji))
+            if role_name:
+                role = discord.utils.get(reaction.message.guild.roles, name=role_name)
+                if role:
+                    member = reaction.message.guild.get_member(user.id)
+                    await member.add_roles(role)
+                    await reaction.message.channel.send(f"{user.mention} has been given the role {role.name}!")
+
+@bot.event
+async def on_reaction_remove(reaction, user):
+    # Ignore if the reaction is from a bot
+    if user.bot:
+        return
+
+    # Check if the reaction is in the message we sent
+    if reaction.message.embeds:
+        embed = reaction.message.embeds[0]
+        if embed.title == "Reaction Roles":
+            role_name = ROLE_EMOJI_MAP.get(str(reaction.emoji))
+            if role_name:
+                role = discord.utils.get(reaction.message.guild.roles, name=role_name)
+                if role:
+                    member = reaction.message.guild.get_member(user.id)
+                    await member.remove_roles(role)
+                    await reaction.message.channel.send(f"{user.mention} has had the role {role.name} removed!")
+
+#END OF REACTION ROLES
 
 @bot.event
 async def on_ready():
