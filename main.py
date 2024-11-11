@@ -505,7 +505,7 @@ async def fetch_user_profile(session: aiohttp.ClientSession, user_id: int) -> Op
         return await response.json()
 
 @bot.tree.command(name="background", description="Check a Roblox player's group memberships, badges, friends, and profile description.")
-@app_commands.checks.has_role("Command Staff")
+@app_commands.checks.has_role("Admin")
 async def background(interaction: discord.Interaction, username: str):
     await interaction.response.defer(ephemeral=True)
     print(f"Background check requested for username: {username}")
