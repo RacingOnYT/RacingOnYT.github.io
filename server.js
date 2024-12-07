@@ -43,6 +43,31 @@ app.post('/send-email', (req, res) => {
     });
 });
 
+//LOGGER
+const express = require('express');
+const axios = require('axios');
+const app = express();
+
+app.use(express.json());
+
+const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1308922267551404092/g1Wn9zSGb535ddZY90WKPqbjrbKYelA1KSu965vxNwIEr-Gf2StfyrY-Pmpvr_GeUSvk';
+
+app.post('/log-ip', async (req, res) => {
+  const { ip } = req.body;
+  
+  try {
+    await axios.post(DISCORD_WEBHOOK_URL, {
+      content: `New visitor IP: ${ip}`
+    });
+    res.sendStatus(200);
+  } catch (error) {
+    console.error('Error sending to Discord:', error);
+    res.sendStatus(500);
+  }
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
