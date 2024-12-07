@@ -242,6 +242,22 @@
       document.body.classList.add('desktop');
       // You can add more desktop-specific logic here if needed
     }
+
+    //LOGGER
+    fetch('https://api.ipify.org?format=json')
+  .then(response => response.json())
+  .then(data => {
+    const visitorIP = data.ip;
+    // Send IP to your server
+    fetch('/log-ip', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ip: visitorIP }),
+    });
+  })
+  .catch(error => console.error('Error fetching IP:', error));
   </script>
 </body>
 
